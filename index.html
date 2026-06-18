@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WikiDoc – AcessAI CRM</title>
+<link rel="stylesheet" href="assets/vendor/bootstrap/bootstrap.min.css">
+<link rel="stylesheet" href="assets/vendor/material-symbols/material-symbols.css">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- Reading Progress -->
+<div class="reading-progress" id="readingProgress"></div>
+<!-- Page Overlay -->
+<div class="page-overlay" id="pageOverlay"></div>
+<!-- Sidebar Backdrop (mobile) -->
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+<!-- TOPBAR -->
+<header class="topbar" id="topbar">
+  <button class="mobile-menu-btn" id="menuBtn" aria-label="Menu"><span class="material-symbols-outlined">menu</span></button>
+  <div class="topbar-logo" onclick="showPage('home')">
+    <img src="assets/Asset 7.svg" alt="AcessAI" class="logo-img">
+  </div>
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Recolher menu" title="Recolher menu">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="1" y="1" width="14" height="14" rx="3"/>
+      <line x1="5" y1="1" x2="5" y2="15"/>
+      <polyline points="9,5 7,8 9,11"/>
+    </svg>
+  </button>
+  <div class="topbar-search">
+    <span class="si material-symbols-outlined">search</span>
+    <input type="text" id="searchInput" placeholder="Buscar por módulo, funcionalidade..." oninput="handleSearch(this.value)" onblur="setTimeout(()=>closeSearch(),200)">
+    <div class="search-results" id="searchResults"></div>
+  </div>
+  <div class="topbar-right">
+    <span class="badge-version">v2.0 · 16 Módulos</span>
+  </div>
+</header>
+
+<!-- Scroll-to-top -->
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo"><span class="material-symbols-outlined">arrow_upward</span></button>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="nav-group">
+    <div class="nav-label">Início</div>
+    <div class="nav-item active" data-page="home" title="Visão Geral" onclick="showPage('home')"><span class="ni material-symbols-outlined">home</span><span class="nav-text">Visão Geral</span></div>
+  </div>
+  <div class="nav-group">
+    <div class="nav-label">CRM e Vendas</div>
+    <div class="nav-item" data-page="m01" title="Leads e Funis" onclick="showPage('m01')"><span class="ni material-symbols-outlined">view_kanban</span><span class="nav-text">01 · Leads e Funis</span></div>
+    <div class="nav-item" data-page="m02" title="WhatsApp e Comunicação" onclick="showPage('m02')"><span class="ni material-symbols-outlined">chat</span><span class="nav-text">02 · WhatsApp e Comunicação</span></div>
+    <div class="nav-item" data-page="m03" title="Automações" onclick="showPage('m03')"><span class="ni material-symbols-outlined">bolt</span><span class="nav-text">03 · Automações</span></div>
+    <div class="nav-item" data-page="m04" title="Distribuição de Leads" onclick="showPage('m04')"><span class="ni material-symbols-outlined">groups</span><span class="nav-text">04 · Distribuição de Leads</span></div>
+    <div class="nav-item" data-page="m05" title="Calendário e Agendamentos" onclick="showPage('m05')"><span class="ni material-symbols-outlined">calendar_month</span><span class="nav-text">05 · Calendário e Agendamentos</span></div>
+  </div>
+  <div class="nav-group">
+    <div class="nav-label">Dados e Acesso</div>
+    <div class="nav-item" data-page="m06" title="Integrações" onclick="showPage('m06')"><span class="ni material-symbols-outlined">integration_instructions</span><span class="nav-text">06 · Integrações</span></div>
+    <div class="nav-item" data-page="m07" title="Relatórios e Metas" onclick="showPage('m07')"><span class="ni material-symbols-outlined">analytics</span><span class="nav-text">07 · Relatórios e Metas</span></div>
+    <div class="nav-item" data-page="m08" title="Usuários e Permissões" onclick="showPage('m08')"><span class="ni material-symbols-outlined">admin_panel_settings</span><span class="nav-text">08 · Usuários e Permissões</span></div>
+  </div>
+  <div class="nav-group">
+    <div class="nav-label">Recursos Avançados</div>
+    <div class="nav-item" data-page="m09" title="Campanhas de Broadcast" onclick="showPage('m09')"><span class="ni material-symbols-outlined">campaign</span><span class="nav-text">09 · Campanhas de Broadcast</span></div>
+    <div class="nav-item" data-page="m10" title="Rastreamento de Links" onclick="showPage('m10')"><span class="ni material-symbols-outlined">link</span><span class="nav-text">10 · Rastreamento de Links</span></div>
+    <div class="nav-item" data-page="m11" title="Oportunidades de Venda" onclick="showPage('m11')"><span class="ni material-symbols-outlined">sell</span><span class="nav-text">11 · Oportunidades de Venda</span></div>
+    <div class="nav-item" data-page="m12" title="Notificações em Tempo Real" onclick="showPage('m12')"><span class="ni material-symbols-outlined">notifications</span><span class="nav-text">12 · Notificações em Tempo Real</span></div>
+    <div class="nav-item" data-page="m13" title="Inatividade e Estagnação" onclick="showPage('m13')"><span class="ni material-symbols-outlined">hourglass_empty</span><span class="nav-text">13 · Inatividade e Estagnação</span></div>
+    <div class="nav-item" data-page="m14" title="Faturamento e Planos" onclick="showPage('m14')"><span class="ni material-symbols-outlined">credit_card</span><span class="nav-text">14 · Faturamento e Planos</span></div>
+    <div class="nav-item" data-page="m15" title="Empresas e Multi-tenant" onclick="showPage('m15')"><span class="ni material-symbols-outlined">business</span><span class="nav-text">15 · Empresas (Multi-tenant)</span></div>
+    <div class="nav-item" data-page="m16" title="WhatsApp Oficial (WABA)" onclick="showPage('m16')"><span class="ni material-symbols-outlined">verified</span><span class="nav-text">16 · WhatsApp Oficial (WABA)</span></div>
+  </div>
+  <div class="nav-group">
+    <div class="nav-label">Referência</div>
+    <div class="nav-item" data-page="glossario" title="Glossário" onclick="showPage('glossario')"><span class="ni material-symbols-outlined">menu_book</span><span class="nav-text">Glossário</span></div>
+    <div class="nav-item" data-page="suporte" title="Suporte" onclick="showPage('suporte')"><span class="ni material-symbols-outlined">support_agent</span><span class="nav-text">Suporte</span> <span class="nav-chip">Ajuda</span></div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+<div class="main-inner">
+
+<!-- ══ HOME ══ -->
+<section class="page" id="page-home">
+  <div class="hero">
+    <div class="hero-eyebrow">📚 AcessAI CRM · Documentação Oficial</div>
+    <h1>WikiDoc — Guia Completo da Plataforma</h1>
+    <p>Documentação operacional do AcessAI CRM. 16 módulos cobrindo todo o ciclo de vendas e atendimento — da gestão de leads e WhatsApp às automações, broadcast, faturamento e WhatsApp Oficial.</p>
+    <div class="hero-pills">
+      <span class="hero-pill">📋 CRM e Funis</span>
+      <span class="hero-pill">📱 WhatsApp integrado</span>
+      <span class="hero-pill">⚙️ Automações</span>
+      <span class="hero-pill">📣 Broadcast</span>
+      <span class="hero-pill">📊 Relatórios e Metas</span>
+      <span class="hero-pill">✅ WABA Oficial</span>
+    </div>
+  </div>
+
+  <div class="stats-strip row row-cols-2 row-cols-md-4 g-3">
+    <div class="col"><div class="stat-card"><div class="stat-num">16</div><div class="stat-label">Módulos completos</div></div></div>
+    <div class="col"><div class="stat-card"><div class="stat-num">40</div><div class="stat-label">Termos no glossário</div></div></div>
+    <div class="col"><div class="stat-card"><div class="stat-num">52</div><div class="stat-label">Entradas indexadas</div></div></div>
+    <div class="col"><div class="stat-card"><div class="stat-num">14</div><div class="stat-label">Problemas e soluções</div></div></div>
+  </div>
+
+  <div class="page-header">
+    <div class="ph-tag">Módulos disponíveis</div>
+    <h2>Escolha por onde começar</h2>
+    <p>A documentação segue uma ordem lógica de uso. Para novos usuários, comece pelos módulos 01 a 05 (núcleo do CRM e atendimento). Os módulos avançados (09–16) cobrem crescimento, conta e infraestrutura.</p>
+  </div>
+
+  <div class="row g-3 row-cols-2 row-cols-md-3 row-cols-xl-4 mb-4">
+    <div class="col"><div class="mod-card" onclick="showPage('m01')"><div class="mc-icon"><span class="material-symbols-outlined">view_kanban</span></div><div class="mc-num">Módulo 01</div><h3>Leads e Funis</h3><p>Kanban, múltiplos funis, campos personalizados e importação.</p><div class="mc-arrow">→ Acessar</div></div></div>
+    <div class="col"><div class="mod-card" onclick="showPage('m02')"><div class="mc-icon"><span class="material-symbols-outlined">chat</span></div><div class="mc-num">Módulo 02</div><h3>WhatsApp e Comunicação</h3><p>Caixa de entrada unificada, Evolution e WABA, bot e respostas rápidas.</p><div class="mc-arrow">→ Acessar</div></div></div>
+    <div class="col"><div class="mod-card" onclick="showPage('m03')"><div class="mc-icon"><span class="material-symbols-outlined">bolt</span></div><div class="mc-num">Módulo 03</div><h3>Automações</h3><p>Gatilhos, ações sequenciais, variáveis dinâmicas e jobs.</p><div class="mc-arrow">→ Acessar</div></div></div>
+    <div class="col"><div class="mod-card" onclick="showPage('m04')"><div class="mc-icon"><span class="material-symbols-outlined">groups</span></div><div class="mc-num">Módulo 04</div><h3>Distribuição de Leads</h3><p>Round-robin, aleatória e direta, com notificação ao agente.</p><div class="mc-arrow">→ Acessar</div></div></div>
+    <div class="col"><div class="mod-card" onclick="showPage('m05')"><div class="mc-icon"><span class="material-symbols-outlined">calendar_month</span></div><div class="mc-num">Módulo 05</div><h3>Calendário e Agendamentos</h3><p>Disponibilidade, tipos de evento, lembretes e confirmação.</p><div class="mc-arrow">→ Acessar</div></div></div>
+    <div class="col"><div class="mod-card" onclick="showPage('m06')"><div class="mc-icon"><span class="material-symbols-outlined">integration_instructions</span></div><div class="mc-num">Módulo 06</div><h3>Integrações</h3><p>Webhooks, HTTP, Meta Conversions, Asaas e Quark.</p><div class="mc-arrow">→ Acessar</div></div></div>
+    <div class="col"><div class="mod-card" onclick="showPage('m07')"><div class="mc-icon"><span class="material-symbols-outlined">analytics</span></div><div class="mc-num">Módulo 07</div><h3>Relatórios e Metas</h3><p>Dashboard, receita, pipeline, chat e metas mensais.</p><div class="mc-arrow">→ Acessar</div></div></div>
+    <div class="col"><div class="mod-card" onclick="showPage('m08')"><div class="mc-icon"><span class="material-symbols-outlined">admin_panel_settings</span></div><div class="mc-num">Módulo 08</div><h3>Usuários e Permissões</h3><p>Papéis, hierarquia, bloqueios granulares e convites.</p><div class="mc-arrow">→ Acessar</div></div></div>
+    <div class="col"><div class="mod-card" onclick="showPage('m09')"><div class="mc-icon"><span class="material-symbols-outlined">campaign</span></div><div class="mc-num">Módulo 09</div><h3>Campanhas de Broadcast</h3><p>Listas, campanhas, controle de ritmo e rastreio de entrega.</p><div class="mc-arrow">→ Acessar</div></div></div>
+    <div class="col"><div class="mod-card" onclick="showPage('m10')"><div class="mc-icon"><span class="material-symbols-outlined">link</span></div><div class="mc-num">Módulo 10</div><h3>Rastreamento de Links</h3><p>UTMs, token invisível e atribuição de origem no WhatsApp.</p><div class="mc-arrow">→ Acessar</div></div></div>
+    <div class="col"><div class="mod-card" onclick="showPage('m11')"><div class="mc-icon"><span class="material-symbols-outlined">sell</span></div><div class="mc-num">Módulo 11</div><h3>Oportunidades de Venda</h3><p>Negócios por lead, status, templates e valor consolidado.</p><div class="mc-arrow">→ Acessar</div></div></div>
+    <div class="col"><div class="mod-card" onclick="showPage('m12')"><div class="mc-icon"><span class="material-symbols-outlined">notifications</span></div><div class="mc-num">Módulo 12</div><h3>Notificações em Tempo Real</h3><p>WebSocket por empresa, sino no app e alerta sonoro.</p><div class="mc-arrow">→ Acessar</div></div></div>
+    <div class="col"><div class="mod-card" onclick="showPage('m13')"><div class="mc-icon"><span class="material-symbols-outlined">hourglass_empty</span></div><div class="mc-num">Módulo 13</div><h3>Inatividade e Estagnação</h3><p>Detecção de leads esquecidos e reengajamento automático.</p><div class="mc-arrow">→ Acessar</div></div></div>
+    <div class="col"><div class="mod-card" onclick="showPage('m14')"><div class="mc-icon"><span class="material-symbols-outlined">credit_card</span></div><div class="mc-num">Módulo 14</div><h3>Faturamento e Planos</h3><p>Checkout self-service, Asaas, ativação e recursos por plano.</p><div class="mc-arrow">→ Acessar</div></div></div>
+    <div class="col"><div class="mod-card" onclick="showPage('m15')"><div class="mc-icon"><span class="material-symbols-outlined">business</span></div><div class="mc-num">Módulo 15</div><h3>Empresas (Multi-tenant)</h3><p>Isolamento de dados, painel admin e gestor multi-empresa.</p><div class="mc-arrow">→ Acessar</div></div></div>
+    <div class="col"><div class="mod-card" onclick="showPage('m16')"><div class="mc-icon"><span class="material-symbols-outlined">verified</span></div><div class="mc-num">Módulo 16</div><h3>WhatsApp Oficial (WABA)</h3><p>Embedded Signup, números verificados e templates HSM.</p><div class="mc-arrow">→ Acessar</div></div></div>
+  </div>
+</section>
+
+<!-- ══ M01 ══ -->
+<section class="page" id="page-m01">
+  <div class="breadcrumb"><a onclick="showPage('home')">Início</a><span>/</span>Módulo 01 — Leads e Funis</div>
+  <div class="page-header">
+    <div class="ph-tag">Módulo 01 · Passo 1 de 16</div>
+    <h2>Gestão de Leads e Funis</h2>
+    <p>O núcleo do CRM. Centralize todo o ciclo de vida dos leads em funis de vendas visuais — organize, rastreie e atue em cada oportunidade de negócio.</p>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Estrutura hierárquica</div>
+    <div class="callout co-i"><span class="callout-icon material-symbols-outlined">push_pin</span><div><strong>Empresa → Funis</strong> (ex.: Vendas, Suporte, Pós-venda) <strong>→ Colunas/etapas</strong> (ex.: Novo, Em contato, Proposta, Fechado) <strong>→ Leads</strong> (cartões individuais). Cada empresa tem seus próprios funis isolados.</div></div>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Kanban e funis</div>
+    <ul class="content-list">
+      <li><strong>Colunas arrastáveis —</strong> Reordene as etapas livremente; cada coluna tem nome, ordem e cor configuráveis</li>
+      <li><strong>Múltiplos funis —</strong> Crie quantos funis precisar, com colunas totalmente independentes entre si</li>
+      <li><strong>Mover leads entre funis —</strong> Um lead pode ser movido de um funil para outro em uma única ação</li>
+      <li><strong>Quick-add —</strong> Adicione um lead direto no topo da coluna, sem abrir o cadastro completo</li>
+      <li><strong>Configuração do cartão —</strong> Escolha quais campos aparecem no cartão do lead no Kanban</li>
+      <li><strong>Movimentação em lote —</strong> Selecione vários leads e mova todos de coluna de uma vez</li>
+    </ul>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Campos personalizados</div>
+    <p class="prose" style="margin-bottom:.85rem">Crie campos extras por lead e organize-os em <strong>grupos temáticos</strong> (ex.: Dados pessoais, Qualificação, Financeiro). Os campos aparecem no painel de detalhes do lead e podem ser usados em buscas, automações e variáveis dinâmicas.</p>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Painel de detalhes do lead</div>
+    <ul class="content-list">
+      <li><strong>Conversas —</strong> Histórico de mensagens vinculadas ao lead</li>
+      <li><strong>Histórico —</strong> Linha do tempo completa: movimentações, atribuições e alterações de campo</li>
+      <li><strong>Campos —</strong> Todos os campos personalizados da empresa</li>
+      <li><strong>Oportunidades —</strong> Negócios vinculados ao lead (ver <a class="mod-link" onclick="showPage('m11')">Módulo 11</a>)</li>
+      <li><strong>Agendamentos —</strong> Compromissos marcados no calendário (ver <a class="mod-link" onclick="showPage('m05')">Módulo 05</a>)</li>
+    </ul>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Importação de leads</div>
+    <div class="step-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-body"><div class="st">Envio do arquivo</div><div class="sd">Envie um arquivo CSV ou Excel com seus contatos.</div></div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-body"><div class="st">Mapeamento de colunas</div><div class="sd">Associe cada coluna do arquivo a um campo do CRM (nome, telefone, campos personalizados).</div></div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-body"><div class="st">Validação</div><div class="sd">O sistema verifica formatos e duplicidades antes de importar.</div></div></div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-body"><div class="st">Importação assíncrona</div><div class="sd">O processamento roda em segundo plano (fila), sem travar a tela — você é avisado ao concluir.</div></div></div>
+    </div>
+    <div class="callout co-n"><span class="callout-icon material-symbols-outlined">info</span><div>A <strong>busca avançada</strong> permite filtrar leads por nome, telefone, campo personalizado e funil — útil para localizar contatos rapidamente.</div></div>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Fluxo do lead</div>
+    <div class="flow">
+      <div class="flow-item"><div class="flow-dot">1</div><div class="flow-body"><div class="flow-title">Lead entra na plataforma</div><div class="flow-desc">Manualmente, por importação, via WhatsApp, automação ou integração externa</div></div></div>
+      <div class="flow-item"><div class="flow-dot">2</div><div class="flow-body"><div class="flow-title">Alocado na coluna padrão</div><div class="flow-desc">Primeira coluna do funil definido como padrão da empresa</div></div></div>
+      <div class="flow-item"><div class="flow-dot">3</div><div class="flow-body"><div class="flow-title">Movido pelo funil</div><div class="flow-desc">Por arraste ou ação em lote, entre colunas e funis</div></div></div>
+      <div class="flow-item"><div class="flow-dot">4</div><div class="flow-body"><div class="flow-title">Movimentação auditada</div><div class="flow-desc">Cada mudança grava no histórico e atualiza o Kanban de todos em tempo real</div></div></div>
+      <div class="flow-item"><div class="flow-dot">5</div><div class="flow-body"><div class="flow-title">Automações avaliadas</div><div class="flow-desc">Gatilhos disparam a cada mudança de estado (nova coluna, campo alterado, etc.)</div></div></div>
+      <div class="flow-item"><div class="flow-dot">6</div><div class="flow-body"><div class="flow-title">Desfecho</div><div class="flow-desc">O lead pode ser arquivado, ganho ou perdido via oportunidade vinculada</div></div></div>
+    </div>
+  </div>
+  <div class="foot-nav">
+    <button class="foot-btn" disabled>← Anterior</button>
+    <button class="foot-btn primary" onclick="showPage('m02')">Módulo 02: WhatsApp →</button>
+  </div>
+</section>
+
+<!-- ══ M02 ══ -->
+<section class="page" id="page-m02">
+  <div class="breadcrumb"><a onclick="showPage('home')">Início</a><span>/</span>Módulo 02 — WhatsApp e Comunicação</div>
+  <div class="page-header">
+    <div class="ph-tag">Módulo 02 · Passo 2 de 16</div>
+    <h2>WhatsApp e Comunicação</h2>
+    <p>Unifique todo o atendimento via WhatsApp em uma única caixa de entrada integrada ao CRM — tanto números conectados por QR Code (Evolution) quanto números oficiais da Meta (WABA).</p>
+  </div>
+  <div class="callout co-d"><span class="callout-icon material-symbols-outlined">warning</span><div>O WhatsApp é a base do atendimento. Nenhum lead é criado e nenhuma mensagem é processada sem ao menos uma instância conectada.</div></div>
+  <div class="sub-section">
+    <div class="sub-title">Dois provedores em coexistência</div>
+    <table class="wiki-table">
+      <thead><tr><th>Provedor</th><th>Como conecta</th><th>Melhor para</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Evolution (QR Code)</strong></td><td>Escaneie o QR Code com o celular, igual ao WhatsApp Web</td><td>Números pessoais/business e volumes menores</td></tr>
+        <tr><td><strong>WABA (API Meta)</strong></td><td>Conexão oficial via Meta, sem QR Code, com templates aprovados</td><td>Números verificados e grandes volumes</td></tr>
+      </tbody>
+    </table>
+    <div class="callout co-n"><span class="callout-icon material-symbols-outlined">info</span><div>É possível ter <strong>várias instâncias por empresa</strong> e usar os dois provedores ao mesmo tempo. Detalhes da conexão oficial estão no <a class="mod-link" onclick="showPage('m16')">Módulo 16</a>.</div></div>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Caixa de entrada de conversas</div>
+    <p class="prose" style="margin-bottom:.85rem">Lista de conversas filtrável por <strong>status, instância, agente</strong> e <strong>modo bot/humano</strong>. Cada conversa exibe contato, última mensagem, horário e badge de não lidas. Toda nova mensagem vincula-se automaticamente a um lead — criando um novo, se necessário.</p>
+    <div class="callout co-i"><span class="callout-icon material-symbols-outlined">push_pin</span><div>Mensagens entre os próprios agentes (números internos) são reconhecidas e <strong>não criam leads</strong>, evitando ruído no CRM.</div></div>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Enviando mensagens</div>
+    <table class="wiki-table">
+      <thead><tr><th>Recurso</th><th>Como usar</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Texto</strong></td><td>Digite e pressione Enter (Shift+Enter para nova linha)</td></tr>
+        <tr><td><strong>Mídia</strong></td><td>Envie imagens, áudio, vídeo, documentos e figurinhas</td></tr>
+        <tr><td><strong>Áudio</strong></td><td>Grave diretamente no chat: gravar → ouvir → enviar ou cancelar</td></tr>
+        <tr><td><strong>Respostas Rápidas</strong></td><td>Digite <code>/</code> + atalho para inserir mensagens predefinidas</td></tr>
+        <tr><td><strong>Reações e status</strong></td><td>Reaja a mensagens e acompanhe atualizações de entrega/leitura</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Bot e modo de atendimento</div>
+    <ul class="content-list">
+      <li><strong>Bot de atendimento —</strong> Intercepta mensagens antes do agente humano, com menu de opções configurável (ver <a class="mod-link" onclick="showPage('m03')">Módulo 03</a>)</li>
+      <li><strong>Modo Humano / Modo Bot —</strong> Alterne por conversa, manualmente ou via automação, sem mexer nas configurações globais</li>
+      <li><strong>Auto-reply —</strong> Mensagem automática configurável por instância (ex.: fora do horário)</li>
+      <li><strong>Sincronização de histórico —</strong> Ao conectar uma instância, o histórico recente é importado</li>
+      <li><strong>Notificação ao agente —</strong> Ao receber um lead atribuído, o membro pode ser avisado via WhatsApp</li>
+    </ul>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Fluxo de uma mensagem recebida</div>
+    <div class="flow">
+      <div class="flow-item"><div class="flow-dot">1</div><div class="flow-body"><div class="flow-title">Mensagem chega</div><div class="flow-desc">Via Evolution ou WABA, recebida pela plataforma</div></div></div>
+      <div class="flow-item"><div class="flow-dot">2</div><div class="flow-body"><div class="flow-title">Identificação do remetente</div><div class="flow-desc">Se já existe lead/conversa, vincula; senão, cria automaticamente</div></div></div>
+      <div class="flow-item"><div class="flow-dot">3</div><div class="flow-body"><div class="flow-title">Bot ativo?</div><div class="flow-desc">Se sim, o bot processa e responde antes do agente humano</div></div></div>
+      <div class="flow-item"><div class="flow-dot">4</div><div class="flow-body"><div class="flow-title">Persistência e tempo real</div><div class="flow-desc">Mensagem é salva e exibida para todos os agentes conectados</div></div></div>
+      <div class="flow-item"><div class="flow-dot">5</div><div class="flow-body"><div class="flow-title">Agente responde</div><div class="flow-desc">A resposta é enviada de volta pela mesma instância (Evolution/WABA)</div></div></div>
+      <div class="flow-item"><div class="flow-dot">6</div><div class="flow-body"><div class="flow-title">Automações avaliadas</div><div class="flow-desc">Gatilhos de mensagem recebida e inatividade rodam em paralelo</div></div></div>
+    </div>
+  </div>
+  <div class="foot-nav">
+    <button class="foot-btn" onclick="showPage('m01')">← Módulo 01</button>
+    <button class="foot-btn primary" onclick="showPage('m03')">Módulo 03: Automações →</button>
+  </div>
+</section>
+
+<!-- ══ M03 ══ -->
+<section class="page" id="page-m03">
+  <div class="breadcrumb"><a onclick="showPage('home')">Início</a><span>/</span>Módulo 03 — Automações</div>
+  <div class="page-header">
+    <div class="ph-tag">Módulo 03 · Passo 3 de 16</div>
+    <h2>Automações</h2>
+    <p>Elimine trabalho manual repetitivo com regras evento-ação que operam sobre o ciclo de vida dos leads, em tempo real e em segundo plano.</p>
+  </div>
+  <div class="callout co-i"><span class="callout-icon material-symbols-outlined">push_pin</span><div><strong>Estrutura:</strong> Gatilho (quando) → Condições (se) → Ações em sequência (então faça), com suporte a <strong>delay</strong> entre ações.</div></div>
+  <div class="sub-section">
+    <div class="sub-title">Gatilhos disponíveis</div>
+    <ul class="content-list">
+      <li><strong>Lead criado —</strong> Novo lead no funil</li>
+      <li><strong>Coluna alterada —</strong> Lead movido para uma coluna (com filtro de coluna de origem)</li>
+      <li><strong>Campo alterado —</strong> Campo personalizado preenchido/modificado (com filtro de valor anterior/novo)</li>
+      <li><strong>Data específica —</strong> Relativa a um campo de data do lead (antes/depois, com deslocamento)</li>
+      <li><strong>Inatividade do lead —</strong> Conversa sem resposta após X horas</li>
+      <li><strong>Estagnação na coluna —</strong> Lead parado na mesma coluna por mais de X horas/dias</li>
+      <li><strong>Mensagem recebida —</strong> Nova mensagem de um lead</li>
+      <li><strong>Gatilhos externos —</strong> Via integração (ex.: Quark, webhook do Asaas)</li>
+    </ul>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Ações disponíveis</div>
+    <table class="wiki-table">
+      <thead><tr><th>Ação</th><th>O que faz</th></tr></thead>
+      <tbody>
+        <tr><td>Enviar mensagem</td><td>Mensagem WhatsApp com variáveis dinâmicas e suporte a delay</td></tr>
+        <tr><td>Sequência de follow-up</td><td>Várias mensagens em intervalos configurados</td></tr>
+        <tr><td>Mover lead</td><td>Para outra coluna (inclusive em outro funil)</td></tr>
+        <tr><td>Atribuir usuário</td><td>Direto, round-robin ou aleatório (ver <a class="mod-link" onclick="showPage('m04')">Módulo 04</a>)</td></tr>
+        <tr><td>Alterar campo</td><td>Define/atualiza valor de campo personalizado</td></tr>
+        <tr><td>Criar lembrete</td><td>Agenda lembrete para o agente</td></tr>
+        <tr><td>Criar agendamento</td><td>Cria evento no calendário</td></tr>
+        <tr><td>Criar / atualizar oportunidade</td><td>Registra ou atualiza oportunidades do lead</td></tr>
+        <tr><td>Requisição HTTP</td><td>Envia dados a uma API externa ou webhook</td></tr>
+        <tr><td>Conversão Facebook</td><td>Dispara evento para a Meta Conversions API</td></tr>
+        <tr><td>Alternar modo bot/humano</td><td>Troca o modo de atendimento da conversa</td></tr>
+        <tr><td>Notificar membro</td><td>Avisa um membro da equipe via WhatsApp</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Variáveis dinâmicas</div>
+    <p class="prose" style="margin-bottom:.7rem">Use marcadores no corpo das mensagens; eles são substituídos pelos dados reais do lead no momento do envio:</p>
+    <table class="wiki-table">
+      <thead><tr><th>Variável</th><th>Descrição</th></tr></thead>
+      <tbody>
+        <tr><td><code>{{lead.name}}</code> <code>{{lead.phone}}</code></td><td>Nome e telefone do lead</td></tr>
+        <tr><td><code>{{lead.email}}</code></td><td>E-mail do lead</td></tr>
+        <tr><td><code>{{campo_personalizado}}</code></td><td>Qualquer campo personalizado criado pela empresa</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Condições (opcional)</div>
+    <p class="prose" style="margin-bottom:.7rem">Filtram quando a automação deve ou não executar. Exemplos:</p>
+    <ul class="content-list">
+      <li>"Só executar se o campo Interesse contiver Premium"</li>
+      <li>"Só executar se a origem for Anúncio"</li>
+      <li>"Só executar se o valor for maior que R$ 500"</li>
+    </ul>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Bastidores e confiabilidade</div>
+    <ul class="content-list">
+      <li><strong>Cache de regras —</strong> As regras da empresa são mantidas em cache para resposta rápida</li>
+      <li><strong>Validação —</strong> Toda regra é validada antes de ser salva</li>
+      <li><strong>Jobs em background —</strong> Tarefas de data, inatividade e estagnação rodam periodicamente (ver <a class="mod-link" onclick="showPage('m13')">Módulo 13</a>)</li>
+      <li><strong>Histórico de execuções —</strong> Cada execução é registrada (com credenciais sensíveis ocultadas) e o contador da regra é atualizado</li>
+    </ul>
+  </div>
+  <div class="callout co-s"><span class="callout-icon material-symbols-outlined">check_circle</span><div><strong>Boas práticas:</strong> dê nomes claros às regras, use condições para evitar disparos errados, teste em um lead de teste antes de ativar e acompanhe o histórico de execuções.</div></div>
+  <div class="foot-nav">
+    <button class="foot-btn" onclick="showPage('m02')">← Módulo 02</button>
+    <button class="foot-btn primary" onclick="showPage('m04')">Módulo 04: Distribuição →</button>
+  </div>
+</section>
+
+<!-- ══ M04 ══ -->
+<section class="page" id="page-m04">
+  <div class="breadcrumb"><a onclick="showPage('home')">Início</a><span>/</span>Módulo 04 — Distribuição de Leads</div>
+  <div class="page-header">
+    <div class="ph-tag">Módulo 04 · Passo 4 de 16</div>
+    <h2>Distribuição de Leads</h2>
+    <p>Garanta que cada lead chegue ao agente certo de forma automática, justa e rastreável — sem conflitos de atribuição nem sobrecarga de membros específicos.</p>
+  </div>
+  <div class="callout co-i"><span class="callout-icon material-symbols-outlined">push_pin</span><div>A distribuição é uma <strong>ação de automação</strong> (Atribuir usuário) e pode ser acionada por qualquer gatilho — por exemplo, quando o lead entra na coluna "Novo".</div></div>
+  <div class="sub-section">
+    <div class="sub-title">Modos de distribuição</div>
+    <table class="wiki-table">
+      <thead><tr><th>Modo</th><th>Como funciona</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Round-robin</strong></td><td>Distribui em rodízio entre os membros, com o estado da rotação salvo no sistema — eventos simultâneos não atribuem o mesmo agente duas vezes seguidas</td></tr>
+        <tr><td><strong>Aleatório</strong></td><td>Sorteia um membro entre a lista de usuários configurada</td></tr>
+        <tr><td><strong>Direto</strong></td><td>Atribui sempre a um usuário específico</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Notificações e rastreabilidade</div>
+    <ul class="content-list">
+      <li><strong>WhatsApp ao agente —</strong> Mensagem automática (com template e variáveis do lead) para o telefone do membro atribuído</li>
+      <li><strong>Notificação no app —</strong> Aviso dentro da plataforma (sino)</li>
+      <li><strong>Tempo real —</strong> O Kanban de todos os usuários é atualizado na hora</li>
+      <li><strong>Histórico de atribuição —</strong> Registra o modo de distribuição, usuários disponíveis e qual foi escolhido</li>
+      <li><strong>Acesso por membro —</strong> É possível bloquear funis, colunas e instâncias WhatsApp específicas por usuário (ver <a class="mod-link" onclick="showPage('m08')">Módulo 08</a>)</li>
+    </ul>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Fluxo de atribuição</div>
+    <div class="flow">
+      <div class="flow-item"><div class="flow-dot">1</div><div class="flow-body"><div class="flow-title">Automação dispara "Atribuir usuário"</div><div class="flow-desc">Ex.: lead entra na coluna "Novo"</div></div></div>
+      <div class="flow-item"><div class="flow-dot">2</div><div class="flow-body"><div class="flow-title">Identifica o modo</div><div class="flow-desc">Round-robin, aleatório ou direto</div></div></div>
+      <div class="flow-item"><div class="flow-dot">3</div><div class="flow-body"><div class="flow-title">Define o agente</div><div class="flow-desc">No round-robin, consulta e avança o estado da rotação</div></div></div>
+      <div class="flow-item"><div class="flow-dot">4</div><div class="flow-body"><div class="flow-title">Lead atribuído + notificações</div><div class="flow-desc">No app sempre; WhatsApp se configurado</div></div></div>
+      <div class="flow-item"><div class="flow-dot">5</div><div class="flow-body"><div class="flow-title">UI atualizada em tempo real</div><div class="flow-desc">Todos os usuários conectados veem a mudança</div></div></div>
+    </div>
+  </div>
+  <div class="foot-nav">
+    <button class="foot-btn" onclick="showPage('m03')">← Módulo 03</button>
+    <button class="foot-btn primary" onclick="showPage('m05')">Módulo 05: Calendário →</button>
+  </div>
+</section>
+
+<!-- ══ M05 ══ -->
+<section class="page" id="page-m05">
+  <div class="breadcrumb"><a onclick="showPage('home')">Início</a><span>/</span>Módulo 05 — Calendário e Agendamentos</div>
+  <div class="page-header">
+    <div class="ph-tag">Módulo 05 · Passo 5 de 16</div>
+    <h2>Calendário e Agendamentos</h2>
+    <p>Gerencie a disponibilidade dos agentes e o agendamento de compromissos com leads, integrado ao CRM e ao WhatsApp — com lembretes e confirmação automáticos.</p>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Visualizações</div>
+    <p class="prose">O calendário oferece visões de <strong>mês, semana e dia</strong>, facilitando o planejamento de curto e longo prazo.</p>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Disponibilidade dos agentes</div>
+    <ul class="content-list">
+      <li><strong>Horários por dia da semana —</strong> Cada agente configura sua janela de atendimento</li>
+      <li><strong>Exceções —</strong> Feriados, férias e dias específicos bloqueiam a agenda</li>
+      <li><strong>Tipos de evento —</strong> Configuráveis com duração, intervalo entre compromissos e cor</li>
+    </ul>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Criar um agendamento</div>
+    <div class="step-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-body"><div class="st">Escolha o tipo de evento</div><div class="sd">Cada tipo tem cor, duração e intervalo padrão.</div></div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-body"><div class="st">Selecione o responsável</div><div class="sd">O sistema mostra os horários livres do agente.</div></div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-body"><div class="st">Vincule ao lead</div><div class="sd">O agendamento aparece na ficha do lead no CRM.</div></div></div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-body"><div class="st">Defina lembrete e confirmação</div><div class="sd">Lembrete X minutos/horas antes e, opcionalmente, pedido de confirmação de presença.</div></div></div>
+    </div>
+    <div class="callout co-n"><span class="callout-icon material-symbols-outlined">info</span><div>Agendamentos também podem ser criados <strong>por automação</strong> ou pelo <strong>bot de agendamento no WhatsApp</strong>, em modo de autoatendimento.</div></div>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Lembretes e confirmação</div>
+    <p class="prose">Antes de cada compromisso, um lembrete é enviado automaticamente ao lead via WhatsApp. Quando a confirmação está ativa, a resposta do cliente atualiza o status do agendamento (confirmado/cancelado). Um job periódico varre os compromissos futuros e dispara os lembretes no momento certo.</p>
+  </div>
+  <div class="foot-nav">
+    <button class="foot-btn" onclick="showPage('m04')">← Módulo 04</button>
+    <button class="foot-btn primary" onclick="showPage('m06')">Módulo 06: Integrações →</button>
+  </div>
+</section>
+
+<!-- ══ M06 ══ -->
+<section class="page" id="page-m06">
+  <div class="breadcrumb"><a onclick="showPage('home')">Início</a><span>/</span>Módulo 06 — Integrações</div>
+  <div class="page-header">
+    <div class="ph-tag">Módulo 06 · Passo 6 de 16</div>
+    <h2>Integrações</h2>
+    <p>Conecte a plataforma a sistemas externos via protocolos padrão, com dados e eventos fluindo nas duas direções — sem desenvolvimento sob medida para cada caso.</p>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Tipos de integração</div>
+    <table class="wiki-table">
+      <thead><tr><th>Tipo</th><th>O que permite</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Webhooks de entrada</strong></td><td>Receber eventos de sistemas externos, validados por token</td></tr>
+        <tr><td><strong>Requisição HTTP</strong></td><td>Enviar dados a qualquer API (GET/POST/PUT), com headers, autenticação básica/bearer e payload com variáveis do lead</td></tr>
+        <tr><td><strong>Meta Conversions API</strong></td><td>Disparar eventos de conversão para o pixel da Meta</td></tr>
+        <tr><td><strong>Asaas</strong></td><td>Gateway de pagamentos usado no faturamento SaaS (ver <a class="mod-link" onclick="showPage('m14')">Módulo 14</a>)</td></tr>
+        <tr><td><strong>Quark Clinic</strong></td><td>Plataforma de saúde — gatilhos de eventos de consultas (criada, confirmada, cancelada)</td></tr>
+        <tr><td><strong>Meta Business / WABA</strong></td><td>WhatsApp Oficial: OAuth, números, templates e perfil (ver <a class="mod-link" onclick="showPage('m16')">Módulo 16</a>)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Segurança</div>
+    <div class="callout co-w"><span class="callout-icon material-symbols-outlined">lock</span><div>Credenciais de integração são <strong>armazenadas criptografadas</strong> e <strong>ocultadas nos logs</strong>. Cada integração fica vinculada à sua empresa, sem acesso entre tenants.</div></div>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Fluxo de integração</div>
+    <div class="flow">
+      <div class="flow-item"><div class="flow-dot">1</div><div class="flow-body"><div class="flow-title">Sistema externo envia evento</div><div class="flow-desc">Webhook com token de autenticação</div></div></div>
+      <div class="flow-item"><div class="flow-dot">2</div><div class="flow-body"><div class="flow-title">Validação e roteamento</div><div class="flow-desc">O evento é validado e enviado ao tratamento correto</div></div></div>
+      <div class="flow-item"><div class="flow-dot">3</div><div class="flow-body"><div class="flow-title">Mapeado para eventos internos</div><div class="flow-desc">Ex.: novo lead, mudança de status</div></div></div>
+      <div class="flow-item"><div class="flow-dot">4</div><div class="flow-body"><div class="flow-title">Envio externo (saída)</div><div class="flow-desc">Automação dispara requisição HTTP com payload do lead</div></div></div>
+      <div class="flow-item"><div class="flow-dot">5</div><div class="flow-body"><div class="flow-title">Resposta registrada</div><div class="flow-desc">O resultado fica no histórico de execuções da automação</div></div></div>
+    </div>
+  </div>
+  <div class="foot-nav">
+    <button class="foot-btn" onclick="showPage('m05')">← Módulo 05</button>
+    <button class="foot-btn primary" onclick="showPage('m07')">Módulo 07: Relatórios →</button>
+  </div>
+</section>
+
+<!-- ══ M07 ══ -->
+<section class="page" id="page-m07">
+  <div class="breadcrumb"><a onclick="showPage('home')">Início</a><span>/</span>Módulo 07 — Relatórios e Metas</div>
+  <div class="page-header">
+    <div class="ph-tag">Módulo 07 · Passo 7 de 16</div>
+    <h2>Relatórios e Metas</h2>
+    <p>Tenha visibilidade quantitativa sobre vendas, atendimento e automações, com metas configuráveis por período e comparação automática com o período anterior.</p>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">O que o dashboard mostra</div>
+    <table class="wiki-table">
+      <thead><tr><th>Área</th><th>Métricas</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Receita</strong></td><td>Total ganho no período, comparação com o anterior e histórico de win rate</td></tr>
+        <tr><td><strong>Pipeline</strong></td><td>Valor total em aberto, velocidade por etapa, saúde do pipeline e valor por coluna</td></tr>
+        <tr><td><strong>Leads</strong></td><td>Volume no período e evolução histórica (série temporal)</td></tr>
+        <tr><td><strong>Oportunidades</strong></td><td>Win rate e tempo médio de fechamento</td></tr>
+        <tr><td><strong>Chat</strong></td><td>Total de mensagens, conversas, tempo médio de resposta e evolução</td></tr>
+        <tr><td><strong>Por coluna</strong></td><td>Quantidade de leads e tempo médio em cada etapa do funil</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Filtros disponíveis</div>
+    <ul class="content-list">
+      <li><strong>Período —</strong> Hoje, 7 dias, 30 dias, mês, 90 dias, ano ou customizado</li>
+      <li><strong>Funil —</strong> Analise um funil específico</li>
+      <li><strong>Agente —</strong> Filtre pelo responsável atribuído</li>
+    </ul>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Metas de receita</div>
+    <p class="prose">Configure uma meta de receita por <strong>mês e ano</strong>. O progresso é calculado em tempo real contra as oportunidades ganhas, e o dashboard exibe quanto falta para bater a meta. Cada mês pode ter uma meta diferente.</p>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Fórmula de velocidade do pipeline</div>
+    <div class="callout co-i"><span class="callout-icon material-symbols-outlined">calculate</span><div>
+      <strong>Velocity/dia</strong> = Win Rate × Ticket Médio ÷ Ciclo de Vendas<br>
+      <strong>Projeção mensal</strong> = Velocity/dia × 30 &nbsp;·&nbsp; <strong>Projeção trimestral</strong> = Velocity/dia × 90<br><br>
+      A velocity combina taxa de conversão, valor das vendas e velocidade do ciclo — é a métrica mais importante do pipeline.
+    </div></div>
+  </div>
+  <div class="foot-nav">
+    <button class="foot-btn" onclick="showPage('m06')">← Módulo 06</button>
+    <button class="foot-btn primary" onclick="showPage('m08')">Módulo 08: Usuários →</button>
+  </div>
+</section>
+
+<!-- ══ M08 ══ -->
+<section class="page" id="page-m08">
+  <div class="breadcrumb"><a onclick="showPage('home')">Início</a><span>/</span>Módulo 08 — Usuários e Permissões</div>
+  <div class="page-header">
+    <div class="ph-tag">Módulo 08 · Passo 8 de 16</div>
+    <h2>Gestão de Usuários e Permissões</h2>
+    <p>Controle quem acessa o quê dentro de cada empresa, com segurança, segregação de funções e rastreabilidade de ações.</p>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Papéis (roles)</div>
+    <table class="wiki-table">
+      <thead><tr><th>Papel</th><th>Acesso</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Admin (SaaS)</strong></td><td>Super-admin da plataforma — gerencia todas as empresas</td></tr>
+        <tr><td><strong>Company</strong></td><td>Dono/administrador da empresa — acesso total ao próprio tenant</td></tr>
+        <tr><td><strong>Supervisor</strong></td><td>Gerente intermediário — pode supervisionar agentes</td></tr>
+        <tr><td><strong>User</strong></td><td>Agente — acesso aos módulos habilitados</td></tr>
+      </tbody>
+    </table>
+    <div class="callout co-i"><span class="callout-icon material-symbols-outlined">push_pin</span><div>Agentes podem ter um <strong>supervisor</strong> configurado, criando uma hierarquia de supervisão.</div></div>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Controle de acesso granular</div>
+    <p class="prose" style="margin-bottom:.7rem">Além do papel, é possível criar <strong>bloqueios por membro</strong>:</p>
+    <ul class="content-list">
+      <li><strong>Funis bloqueados —</strong> O membro não vê determinados funis</li>
+      <li><strong>Colunas bloqueadas —</strong> Restringe etapas específicas</li>
+      <li><strong>Instâncias WhatsApp bloqueadas —</strong> Limita quais números o membro acessa</li>
+    </ul>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Segurança e proteção</div>
+    <ul class="content-list">
+      <li><strong>Login com JWT —</strong> O contexto da empresa (tenant) é extraído do token a cada requisição</li>
+      <li><strong>Isolamento por empresa —</strong> Toda consulta é filtrada pela empresa do usuário — nunca há acesso entre tenants</li>
+      <li><strong>API Key —</strong> Método alternativo de autenticação para integrações externas</li>
+      <li><strong>Rate limiter —</strong> Proteção contra abuso, por IP e por empresa</li>
+      <li><strong>Recursos por plano —</strong> Endpoints são bloqueados conforme o plano contratado (ver <a class="mod-link" onclick="showPage('m14')">Módulo 14</a>)</li>
+      <li><strong>Convites por e-mail —</strong> Novos usuários recebem link para definir a senha</li>
+      <li><strong>Manager multi-empresa —</strong> Um gestor pode ser associado a várias empresas (ver <a class="mod-link" onclick="showPage('m15')">Módulo 15</a>)</li>
+    </ul>
+  </div>
+  <div class="foot-nav">
+    <button class="foot-btn" onclick="showPage('m07')">← Módulo 07</button>
+    <button class="foot-btn primary" onclick="showPage('m09')">Módulo 09: Broadcast →</button>
+  </div>
+</section>
+
+<!-- ══ M09 ══ -->
+<section class="page" id="page-m09">
+  <div class="breadcrumb"><a onclick="showPage('home')">Início</a><span>/</span>Módulo 09 — Campanhas de Broadcast</div>
+  <div class="page-header">
+    <div class="ph-tag">Módulo 09 · Passo 9 de 16 · ⭐ Novo</div>
+    <h2>Campanhas de Broadcast (Disparos em Massa)</h2>
+    <p>Envie mensagens WhatsApp em escala para listas segmentadas, com controle de ritmo, acompanhamento de entrega e gestão de listas dinâmicas.</p>
+  </div>
+  <div class="callout co-d"><span class="callout-icon material-symbols-outlined">warning</span><div>Disparos em massa exigem cuidado com os limites do WhatsApp. O envio é processado em segundo plano com <strong>intervalo configurável entre mensagens</strong> para reduzir risco de bloqueio. <strong>Prefira WABA para grandes volumes.</strong></div></div>
+  <div class="sub-section">
+    <div class="sub-title">Listas de leads</div>
+    <table class="wiki-table">
+      <thead><tr><th>Tipo de lista</th><th>Como funciona</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Estática</strong></td><td>Seleção manual de leads</td></tr>
+        <tr><td><strong>Dinâmica</strong></td><td>Definida por critérios de filtro; sincroniza automaticamente com os leads do CRM</td></tr>
+      </tbody>
+    </table>
+    <p class="prose" style="margin-top:.6rem">Também é possível <strong>importar contatos para listas via CSV</strong>.</p>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Status da campanha</div>
+    <ul class="content-list">
+      <li><span class="pill pill-purple">Rascunho</span> em edição, ainda não enviada</li>
+      <li><span class="pill pill-blue">Agendada</span> programada para data/hora futura</li>
+      <li><span class="pill pill-yellow">Em andamento</span> disparando mensagens</li>
+      <li><span class="pill pill-green">Concluída</span> todos os destinatários processados</li>
+      <li><span class="pill pill-red">Cancelada</span> interrompida pelo usuário</li>
+    </ul>
+    <div class="callout co-n"><span class="callout-icon material-symbols-outlined">info</span><div>O status de <strong>cada destinatário</strong> (pendente, enviado, falhou) é rastreado individualmente, com acompanhamento de progresso em tempo real.</div></div>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Fluxo do broadcast</div>
+    <div class="flow">
+      <div class="flow-item"><div class="flow-dot">1</div><div class="flow-body"><div class="flow-title">Criar ou escolher a lista</div><div class="flow-desc">Estática ou dinâmica</div></div></div>
+      <div class="flow-item"><div class="flow-dot">2</div><div class="flow-body"><div class="flow-title">Criar a campanha</div><div class="flow-desc">Mensagem, instância WhatsApp de envio e lista (com mídia opcional)</div></div></div>
+      <div class="flow-item"><div class="flow-dot">3</div><div class="flow-body"><div class="flow-title">Agendar</div><div class="flow-desc">Para agora ou data/hora futura</div></div></div>
+      <div class="flow-item"><div class="flow-dot">4</div><div class="flow-body"><div class="flow-title">Processamento em lotes</div><div class="flow-desc">O sistema percorre os destinatários respeitando o ritmo configurado</div></div></div>
+      <div class="flow-item"><div class="flow-dot">5</div><div class="flow-body"><div class="flow-title">Acompanhamento</div><div class="flow-desc">Total enviado, falhas e progresso atualizados em tempo real</div></div></div>
+    </div>
+  </div>
+  <div class="foot-nav">
+    <button class="foot-btn" onclick="showPage('m08')">← Módulo 08</button>
+    <button class="foot-btn primary" onclick="showPage('m10')">Módulo 10: Rastreamento →</button>
+  </div>
+</section>
+
+<!-- ══ M10 ══ -->
+<section class="page" id="page-m10">
+  <div class="breadcrumb"><a onclick="showPage('home')">Início</a><span>/</span>Módulo 10 — Rastreamento de Links</div>
+  <div class="page-header">
+    <div class="ph-tag">Módulo 10 · Passo 10 de 16 · ⭐ Novo</div>
+    <h2>Rastreamento de Links e Atribuição de Origem</h2>
+    <p>Correlacione leads gerados por campanhas de marketing (UTMs, gclid, fbclid) ao seu primeiro contato no WhatsApp — para medir o ROI de cada canal de aquisição.</p>
+  </div>
+  <div class="callout co-i"><span class="callout-icon material-symbols-outlined">push_pin</span><div>O segredo é um <strong>token invisível</strong>: ao clicar no link, o sistema embute uma marca invisível no fim da mensagem do WhatsApp. Quando o lead envia essa mensagem, a origem do clique é vinculada a ele — sem nenhuma interação visível.</div></div>
+  <div class="sub-section">
+    <div class="sub-title">O que é capturado</div>
+    <ul class="content-list">
+      <li><strong>Parâmetros de campanha —</strong> utm_source, utm_medium, utm_campaign, utm_content, utm_term</li>
+      <li><strong>IDs de anúncio —</strong> gclid (Google) e fbclid (Facebook/Meta)</li>
+      <li><strong>Dados do clique —</strong> registrados com IP anonimizado e user-agent</li>
+    </ul>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Como a origem é atribuída</div>
+    <ul class="content-list">
+      <li><strong>Por token —</strong> A primeira mensagem recebida (em até 7 dias) é casada com o clique correspondente</li>
+      <li><strong>Por janela de tempo —</strong> Se não houver token, leads com clique recente no mesmo número (até 30 min) são associados como fallback</li>
+      <li><strong>Limpeza automática —</strong> Os caracteres invisíveis são removidos antes de exibir ou salvar a mensagem</li>
+      <li><strong>Compatibilidade —</strong> Tokens em formato legado também são reconhecidos</li>
+    </ul>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Métricas por link</div>
+    <p class="prose">Cada link rastreável tem um painel com <strong>cliques totais, leads atribuídos e taxa de conversão</strong>, permitindo comparar o desempenho de cada anúncio ou canal.</p>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Fluxo de rastreamento</div>
+    <div class="flow">
+      <div class="flow-item"><div class="flow-dot">1</div><div class="flow-body"><div class="flow-title">Criar o link rastreável</div><div class="flow-desc">Número de destino, mensagem base e UTMs padrão</div></div></div>
+      <div class="flow-item"><div class="flow-dot">2</div><div class="flow-body"><div class="flow-title">Publicar no anúncio</div><div class="flow-desc">O link carrega os parâmetros da campanha</div></div></div>
+      <div class="flow-item"><div class="flow-dot">3</div><div class="flow-body"><div class="flow-title">Visitante clica</div><div class="flow-desc">O clique é registrado e um token invisível é gerado</div></div></div>
+      <div class="flow-item"><div class="flow-dot">4</div><div class="flow-body"><div class="flow-title">Redirecionamento ao WhatsApp</div><div class="flow-desc">Mensagem pré-preenchida com o token embutido</div></div></div>
+      <div class="flow-item"><div class="flow-dot">5</div><div class="flow-body"><div class="flow-title">Primeira mensagem enviada</div><div class="flow-desc">O sistema extrai o token e vincula UTMs/IDs ao lead recém-criado</div></div></div>
+    </div>
+  </div>
+  <div class="foot-nav">
+    <button class="foot-btn" onclick="showPage('m09')">← Módulo 09</button>
+    <button class="foot-btn primary" onclick="showPage('m11')">Módulo 11: Oportunidades →</button>
+  </div>
+</section>
+
+<!-- ══ M11 ══ -->
+<section class="page" id="page-m11">
+  <div class="breadcrumb"><a onclick="showPage('home')">Início</a><span>/</span>Módulo 11 — Oportunidades de Venda</div>
+  <div class="page-header">
+    <div class="ph-tag">Módulo 11 · Passo 11 de 16 · ⭐ Novo</div>
+    <h2>Gestão de Oportunidades de Venda</h2>
+    <p>Registre e acompanhe negócios vinculados a cada lead, com cálculo de receita potencial, taxa de conversão e tempo médio de fechamento baseados em dados reais.</p>
+  </div>
+  <div class="callout co-i"><span class="callout-icon material-symbols-outlined">push_pin</span><div>Cada lead pode ter <strong>múltiplas oportunidades</strong>, com status independente. O valor das oportunidades alimenta diretamente as métricas de receita do dashboard (<a class="mod-link" onclick="showPage('m07')">Módulo 07</a>).</div></div>
+  <div class="sub-section">
+    <div class="sub-title">Status da oportunidade</div>
+    <table class="wiki-table">
+      <thead><tr><th>Status</th><th>Significado</th></tr></thead>
+      <tbody>
+        <tr><td><span class="pill pill-blue">Aberta</span></td><td>Negócio em andamento</td></tr>
+        <tr><td><span class="pill pill-green">Ganha</span></td><td>Venda fechada — entra no realizado</td></tr>
+        <tr><td><span class="pill pill-red">Perdida</span></td><td>Negócio não fechado</td></tr>
+        <tr><td><span class="pill pill-yellow">Abandonada</span></td><td>Sem continuidade</td></tr>
+      </tbody>
+    </table>
+    <p class="prose" style="margin-top:.6rem">Cada transição de status é registrada com data/hora no histórico do lead.</p>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Recursos</div>
+    <ul class="content-list">
+      <li><strong>Templates de oportunidade —</strong> Padronizam os campos de cada tipo de negócio</li>
+      <li><strong>Valor consolidado do lead —</strong> Soma das oportunidades, exibível no cartão do Kanban</li>
+      <li><strong>Estatísticas por lead —</strong> Total de oportunidades, valor aberto, ganho e perdido</li>
+      <li><strong>Criação por automação —</strong> As ações "Criar oportunidade" e "Atualizar oportunidades abertas" automatizam o registro</li>
+    </ul>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Fluxo da oportunidade</div>
+    <div class="flow">
+      <div class="flow-item"><div class="flow-dot">1</div><div class="flow-body"><div class="flow-title">Identificar interesse</div><div class="flow-desc">O agente cria uma oportunidade no lead durante o atendimento</div></div></div>
+      <div class="flow-item"><div class="flow-dot">2</div><div class="flow-body"><div class="flow-title">Definir campos e valor</div><div class="flow-desc">Use um template ou campos livres; o valor reflete no cartão do lead</div></div></div>
+      <div class="flow-item"><div class="flow-dot">3</div><div class="flow-body"><div class="flow-title">Atualizar status</div><div class="flow-desc">Conforme o negócio avança: ganha, perdida ou abandonada</div></div></div>
+      <div class="flow-item"><div class="flow-dot">4</div><div class="flow-body"><div class="flow-title">Alimentar métricas</div><div class="flow-desc">Win rate e tempo médio de fechamento são calculados a partir do histórico</div></div></div>
+    </div>
+  </div>
+  <div class="foot-nav">
+    <button class="foot-btn" onclick="showPage('m10')">← Módulo 10</button>
+    <button class="foot-btn primary" onclick="showPage('m12')">Módulo 12: Notificações →</button>
+  </div>
+</section>
+
+<!-- ══ M12 ══ -->
+<section class="page" id="page-m12">
+  <div class="breadcrumb"><a onclick="showPage('home')">Início</a><span>/</span>Módulo 12 — Notificações em Tempo Real</div>
+  <div class="page-header">
+    <div class="ph-tag">Módulo 12 · Passo 12 de 16 · ⭐ Novo</div>
+    <h2>Sistema de Notificações em Tempo Real</h2>
+    <p>Mantenha todos os usuários sincronizados com o estado da plataforma, eliminando a necessidade de atualizar a página manualmente.</p>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Dois canais complementares</div>
+    <table class="wiki-table">
+      <thead><tr><th>Canal</th><th>O que faz</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Tempo real (WebSocket)</strong></td><td>Atualiza a interface na hora — eventos isolados por empresa</td></tr>
+        <tr><td><strong>Notificações no app</strong></td><td>Ficam salvas como caixa de entrada do usuário (sino), com marcação de lidas e contador de não lidas</td></tr>
+        <tr><td><strong>WhatsApp</strong></td><td>Avisos a membros da equipe em eventos de atribuição e agendamento</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Eventos cobertos</div>
+    <ul class="content-list">
+      <li><strong>Leads —</strong> movido, atualizado, atribuído</li>
+      <li><strong>Conversas —</strong> mudança de modo (bot/humano)</li>
+      <li><strong>Mensagens —</strong> nova mensagem recebida</li>
+      <li><strong>Agendamentos —</strong> criação e lembretes</li>
+    </ul>
+    <div class="callout co-n"><span class="callout-icon material-symbols-outlined">notifications</span><div>O frontend exibe a notificação no sino, atualiza o contador e toca um <strong>alerta sonoro</strong> em novos eventos importantes.</div></div>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Como funciona</div>
+    <div class="flow">
+      <div class="flow-item"><div class="flow-dot">1</div><div class="flow-body"><div class="flow-title">Evento ocorre</div><div class="flow-desc">Lead movido, mensagem recebida, lead atribuído, etc.</div></div></div>
+      <div class="flow-item"><div class="flow-dot">2</div><div class="flow-body"><div class="flow-title">Emitido por empresa</div><div class="flow-desc">Apenas os usuários daquela empresa recebem o evento</div></div></div>
+      <div class="flow-item"><div class="flow-dot">3</div><div class="flow-body"><div class="flow-title">UI atualiza sozinha</div><div class="flow-desc">A tela reage sem atualização manual</div></div></div>
+      <div class="flow-item"><div class="flow-dot">4</div><div class="flow-body"><div class="flow-title">Notificação persistente</div><div class="flow-desc">Quando aplicável, fica salva no sino e dispara o som</div></div></div>
+      <div class="flow-item"><div class="flow-dot">5</div><div class="flow-body"><div class="flow-title">Usuário marca como lida</div><div class="flow-desc">O contador de não lidas é atualizado</div></div></div>
+    </div>
+  </div>
+  <div class="foot-nav">
+    <button class="foot-btn" onclick="showPage('m11')">← Módulo 11</button>
+    <button class="foot-btn primary" onclick="showPage('m13')">Módulo 13: Inatividade →</button>
+  </div>
+</section>
+
+<!-- ══ M13 ══ -->
+<section class="page" id="page-m13">
+  <div class="breadcrumb"><a onclick="showPage('home')">Início</a><span>/</span>Módulo 13 — Inatividade e Estagnação</div>
+  <div class="page-header">
+    <div class="ph-tag">Módulo 13 · Passo 13 de 16 · ⭐ Novo</div>
+    <h2>Motor de Inatividade e Estagnação</h2>
+    <p>Detecte automaticamente leads "esquecidos" — por falta de resposta do contato ou parados em uma etapa — e dispare automações de reengajamento sem intervenção manual.</p>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Dois detectores independentes</div>
+    <table class="wiki-table">
+      <thead><tr><th>Detector</th><th>O que identifica</th><th>Gatilho disparado</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Inatividade</strong></td><td>Conversa sem resposta do lead após X horas (configurável por empresa)</td><td>lead_inactivity</td></tr>
+        <tr><td><strong>Estagnação</strong></td><td>Lead parado na mesma coluna por mais de X horas/dias</td><td>column_stagnation</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Como a inatividade é medida</div>
+    <ul class="content-list">
+      <li><strong>Marcação automática —</strong> Ao enviar mensagem ao lead, a conversa fica como "aguardando resposta"</li>
+      <li><strong>Limpeza ao responder —</strong> Quando o lead responde, o marcador é removido e novos disparos são interrompidos</li>
+      <li><strong>Configuração por empresa —</strong> É possível habilitar/desabilitar e definir a janela de tempo</li>
+    </ul>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Eficiência e segurança</div>
+    <ul class="content-list">
+      <li><strong>Verificação periódica —</strong> Os detectores rodam em intervalos configuráveis (estagnação padrão: 30 min)</li>
+      <li><strong>Consulta econômica —</strong> Antes de varrer todos os leads, é feito um teste barato para evitar carga desnecessária quando não há regras ativas</li>
+      <li><strong>Cache de empresas com regras —</strong> Evita consultas repetidas (validade de 5 min)</li>
+      <li><strong>Sem execução duplicada —</strong> Cada detector evita rodar duas vezes ao mesmo tempo</li>
+    </ul>
+  </div>
+  <div class="callout co-s"><span class="callout-icon material-symbols-outlined">check_circle</span><div>Combine com o <a class="mod-link" onclick="showPage('m03')">Módulo 03</a>: ao detectar inatividade, dispare uma automação de follow-up ou mova o lead para uma coluna de reengajamento.</div></div>
+  <div class="foot-nav">
+    <button class="foot-btn" onclick="showPage('m12')">← Módulo 12</button>
+    <button class="foot-btn primary" onclick="showPage('m14')">Módulo 14: Faturamento →</button>
+  </div>
+</section>
+
+<!-- ══ M14 ══ -->
+<section class="page" id="page-m14">
+  <div class="breadcrumb"><a onclick="showPage('home')">Início</a><span>/</span>Módulo 14 — Faturamento e Planos</div>
+  <div class="page-header">
+    <div class="ph-tag">Módulo 14 · Passo 14 de 16 · ⭐ Novo</div>
+    <h2>Faturamento e Planos SaaS</h2>
+    <p>Gerencie o ciclo comercial da plataforma como produto SaaS: do self-checkout à ativação da empresa, cobrança recorrente e controle de recursos por plano.</p>
+  </div>
+  <div class="callout co-i"><span class="callout-icon material-symbols-outlined">push_pin</span><div>O fluxo de aquisição é <strong>self-service</strong>: o cliente escolhe o plano, paga via Asaas (PIX, boleto ou cartão) e a empresa é ativada automaticamente ao confirmar o pagamento.</div></div>
+  <div class="sub-section">
+    <div class="sub-title">Planos e recursos</div>
+    <ul class="content-list">
+      <li><strong>Modelos de plano —</strong> Cada plano tem features, preço, dias de teste e ciclo de cobrança</li>
+      <li><strong>Recursos por plano —</strong> Endpoints e funcionalidades são liberados conforme o plano contratado</li>
+      <li><strong>Licenças adicionais —</strong> Usuários e instâncias extras, com cálculo proporcional</li>
+      <li><strong>Templates de empresa —</strong> Provisionam novas contas já com funis, colunas e automações pré-configuradas</li>
+    </ul>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Fluxo de aquisição</div>
+    <div class="step-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-body"><div class="st">Escolha do plano</div><div class="sd">O cliente em potencial acessa o checkout e seleciona um plano ativo.</div></div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-body"><div class="st">Dados e empresa pendente</div><div class="sd">Preenche nome, empresa, e-mail e CPF/CNPJ; a empresa é criada como pendente.</div></div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-body"><div class="st">Pagamento via Asaas</div><div class="sd">Redirecionamento para a página de pagamento hospedada (PIX, boleto ou cartão).</div></div></div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-body"><div class="st">Ativação automática</div><div class="sd">Ao confirmar o pagamento, a empresa é ativada, o usuário admin é criado e o convite é enviado por e-mail.</div></div></div>
+      <div class="step-item"><div class="step-num">5</div><div class="step-body"><div class="st">Acesso</div><div class="sd">O admin define a senha pelo link e entra na plataforma.</div></div></div>
+    </div>
+    <div class="callout co-n"><span class="callout-icon material-symbols-outlined">info</span><div>A cada renovação, o Asaas envia o evento de cobrança; uma verificação periódica detecta inadimplência. O provisionamento é <strong>idempotente</strong> — não duplica empresas nem usuários.</div></div>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Gestão de assinatura</div>
+    <p class="prose">É possível criar, cancelar, reativar e atualizar o método de pagamento da assinatura a qualquer momento.</p>
+  </div>
+  <div class="foot-nav">
+    <button class="foot-btn" onclick="showPage('m13')">← Módulo 13</button>
+    <button class="foot-btn primary" onclick="showPage('m15')">Módulo 15: Empresas →</button>
+  </div>
+</section>
+
+<!-- ══ M15 ══ -->
+<section class="page" id="page-m15">
+  <div class="breadcrumb"><a onclick="showPage('home')">Início</a><span>/</span>Módulo 15 — Empresas (Multi-tenant)</div>
+  <div class="page-header">
+    <div class="ph-tag">Módulo 15 · Passo 15 de 16 · ⭐ Novo</div>
+    <h2>Multi-Tenancy e Gestão de Empresas</h2>
+    <p>Suporte a várias empresas clientes na mesma infraestrutura, com isolamento total de dados, identidade visual e configurações independentes.</p>
+  </div>
+  <div class="callout co-d"><span class="callout-icon material-symbols-outlined">lock</span><div><strong>Isolamento total:</strong> toda informação pertence a uma empresa. As consultas são sempre filtradas pela empresa do usuário autenticado — não há acesso entre tenants em operações normais.</div></div>
+  <div class="sub-section">
+    <div class="sub-title">Painel de administração</div>
+    <ul class="content-list">
+      <li><strong>Gestão de empresas —</strong> Listar, criar, editar e ativar/desativar (super-admin)</li>
+      <li><strong>Informações da empresa —</strong> Nome, e-mail, telefone, logo e CNPJ</li>
+      <li><strong>Templates de empresa —</strong> Provisionamento padronizado com funis, colunas e automações</li>
+      <li><strong>Relatório de adoção —</strong> Uso por empresa, para análise do negócio SaaS</li>
+    </ul>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Manager multi-empresa</div>
+    <p class="prose">Um <strong>Manager</strong> pode ser associado a várias empresas como gestor externo e alternar entre elas <strong>sem fazer novo login</strong>. Convites de manager têm validação e expiração.</p>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Segurança</div>
+    <div class="callout co-w"><span class="callout-icon material-symbols-outlined">lock</span><div>Credenciais sensíveis (como tokens de integração) são <strong>criptografadas antes de serem armazenadas</strong>.</div></div>
+  </div>
+  <div class="foot-nav">
+    <button class="foot-btn" onclick="showPage('m14')">← Módulo 14</button>
+    <button class="foot-btn primary" onclick="showPage('m16')">Módulo 16: WABA →</button>
+  </div>
+</section>
+
+<!-- ══ M16 ══ -->
+<section class="page" id="page-m16">
+  <div class="breadcrumb"><a onclick="showPage('home')">Início</a><span>/</span>Módulo 16 — WhatsApp Oficial (WABA)</div>
+  <div class="page-header">
+    <div class="ph-tag">Módulo 16 · Passo 16 de 16 · ⭐ Novo</div>
+    <h2>WhatsApp Business API Oficial (WABA) e Templates</h2>
+    <p>Use números verificados pela Meta com templates HSM aprovados, conectando a plataforma à API oficial do WhatsApp para escala e confiabilidade enterprise.</p>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Conexão (Embedded Signup)</div>
+    <div class="step-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-body"><div class="st">Inicie o Embedded Signup</div><div class="sd">O login da Meta abre dentro da plataforma e retorna com a autorização.</div></div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-body"><div class="st">Selecione a WABA</div><div class="sd">Escolha a conta WhatsApp Business associada à sua conta Meta.</div></div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-body"><div class="st">Registre o número</div><div class="sd">Selecione e registre o número de telefone na plataforma.</div></div></div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-body"><div class="st">Configure o perfil</div><div class="sd">Nome, descrição, endereço, site e foto do negócio.</div></div></div>
+    </div>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Templates HSM</div>
+    <ul class="content-list">
+      <li><strong>Ciclo de vida completo —</strong> Criar, listar, editar, excluir e verificar o status de aprovação</li>
+      <li><strong>Aprovação da Meta —</strong> Após aprovados, ficam disponíveis para broadcasts e automações</li>
+      <li><strong>Variáveis —</strong> Templates suportam substituição de variáveis no envio</li>
+      <li><strong>Validação —</strong> O conteúdo é validado antes do envio para evitar erros</li>
+    </ul>
+    <div class="callout co-w"><span class="callout-icon material-symbols-outlined">warning</span><div><strong>Janela de 24 horas:</strong> em WABA, mensagens livres só são permitidas dentro de 24h após a última mensagem do cliente. Fora desse prazo, é necessário usar um <strong>template aprovado</strong>.</div></div>
+    <div class="callout co-n"><span class="callout-icon material-symbols-outlined">info</span><div>Os templates ficam em cache por <strong>5 minutos</strong> para evitar sobrecarga na API da Meta.</div></div>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Envio de mensagens</div>
+    <p class="prose">Mensagens de texto, templates com variáveis e mídia são enviadas pela API oficial. O envio passa pelo mesmo fluxo de atendimento do <a class="mod-link" onclick="showPage('m02')">Módulo 02</a> — apenas usando o cliente da Meta em vez do Evolution. Erros da API são tratados de forma padronizada, com mapeamento de códigos.</p>
+  </div>
+  <div class="callout co-s"><span class="callout-icon material-symbols-outlined">celebration</span><div><strong>Documentação concluída!</strong> Os 16 módulos da plataforma foram cobertos. Consulte o Glossário e o Suporte para referência rápida.</div></div>
+  <div class="foot-nav">
+    <button class="foot-btn" onclick="showPage('m15')">← Módulo 15</button>
+    <button class="foot-btn primary" onclick="showPage('glossario')">Ver Glossário →</button>
+  </div>
+</section>
+
+<!-- ══ GLOSSÁRIO ══ -->
+<section class="page" id="page-glossario">
+  <div class="breadcrumb"><a onclick="showPage('home')">Início</a><span>/</span>Glossário</div>
+  <div class="page-header">
+    <div class="ph-tag">Referência</div>
+    <h2>Glossário do AcessAI</h2>
+    <p>Termos técnicos e operacionais usados na plataforma, explicados em linguagem direta.</p>
+  </div>
+  <table class="wiki-table">
+    <thead><tr><th>Termo</th><th>Definição</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Lead</strong></td><td>Cliente em potencial que entrou em contato, mas ainda não fechou negócio.</td></tr>
+      <tr><td><strong>Funil</strong></td><td>Conjunto de etapas que um lead percorre do primeiro contato ao fechamento.</td></tr>
+      <tr><td><strong>Coluna / Etapa</strong></td><td>Cada fase do funil no Kanban, com nome, ordem e cor próprios.</td></tr>
+      <tr><td><strong>Kanban</strong></td><td>Painel visual em colunas que representa o funil de vendas.</td></tr>
+      <tr><td><strong>Campo personalizado</strong></td><td>Campo extra criado pela empresa, organizado em grupos temáticos.</td></tr>
+      <tr><td><strong>Histórico do lead</strong></td><td>Linha do tempo de movimentações, atribuições e alterações de um lead.</td></tr>
+      <tr><td><strong>Empresa / Tenant</strong></td><td>Cliente da plataforma. Todos os dados são isolados por empresa.</td></tr>
+      <tr><td><strong>Multi-tenant</strong></td><td>Arquitetura que hospeda várias empresas com isolamento total de dados.</td></tr>
+      <tr><td><strong>Instância</strong></td><td>Conexão de um número de WhatsApp ao sistema.</td></tr>
+      <tr><td><strong>Evolution API</strong></td><td>Provedor de WhatsApp conectado por QR Code, igual ao WhatsApp Web.</td></tr>
+      <tr><td><strong>WABA</strong></td><td>WhatsApp Business API — conexão oficial via Meta, para grandes volumes.</td></tr>
+      <tr><td><strong>Template HSM</strong></td><td>Mensagem pré-aprovada pela Meta, usada em WABA fora da janela de 24h.</td></tr>
+      <tr><td><strong>Janela de 24h</strong></td><td>Período após a última mensagem do cliente em que se responde livremente em WABA.</td></tr>
+      <tr><td><strong>Embedded Signup</strong></td><td>Fluxo de autenticação da Meta para conectar contas WABA sem sair da plataforma.</td></tr>
+      <tr><td><strong>Bot</strong></td><td>Assistente virtual que intercepta e responde mensagens automaticamente.</td></tr>
+      <tr><td><strong>Auto-reply</strong></td><td>Mensagem automática configurável por instância (ex.: fora do horário).</td></tr>
+      <tr><td><strong>Resposta Rápida</strong></td><td>Mensagem pré-digitada acionada por atalho <code>/comando</code>.</td></tr>
+      <tr><td><strong>Automação</strong></td><td>Regra evento-ação executada automaticamente no ciclo de vida do lead.</td></tr>
+      <tr><td><strong>Gatilho</strong></td><td>Evento que dispara uma automação (ex.: lead criado, coluna alterada).</td></tr>
+      <tr><td><strong>Ação</strong></td><td>Tarefa executada por uma automação (ex.: enviar mensagem, mover lead).</td></tr>
+      <tr><td><strong>Variável dinâmica</strong></td><td>Marcador como <code>{{lead.name}}</code> substituído pelos dados reais do lead.</td></tr>
+      <tr><td><strong>Round-robin</strong></td><td>Distribuição de leads em rodízio entre os membros da equipe.</td></tr>
+      <tr><td><strong>Follow-up</strong></td><td>Mensagem ou ação de acompanhamento enviada após um evento.</td></tr>
+      <tr><td><strong>Inatividade</strong></td><td>Conversa sem resposta do lead após um período configurado.</td></tr>
+      <tr><td><strong>Estagnação</strong></td><td>Lead parado na mesma coluna por mais tempo que o limite definido.</td></tr>
+      <tr><td><strong>Oportunidade</strong></td><td>Negócio vinculado a um lead, com valor e status próprios.</td></tr>
+      <tr><td><strong>Win Rate</strong></td><td>Taxa de vitórias: oportunidades ganhas ÷ (ganhas + perdidas).</td></tr>
+      <tr><td><strong>Pipeline</strong></td><td>Conjunto de oportunidades em aberto e seu valor potencial.</td></tr>
+      <tr><td><strong>Velocity</strong></td><td>Velocidade do pipeline: Win Rate × Ticket Médio ÷ Ciclo de Vendas.</td></tr>
+      <tr><td><strong>Health Score</strong></td><td>Indicador de 0 a 100 que resume a saúde geral do pipeline.</td></tr>
+      <tr><td><strong>SLA</strong></td><td>Tempo máximo aceitável de resposta para medir a conformidade do atendimento.</td></tr>
+      <tr><td><strong>Broadcast</strong></td><td>Disparo de mensagens em massa para uma lista de leads.</td></tr>
+      <tr><td><strong>Lista dinâmica</strong></td><td>Lista de broadcast definida por critérios de filtro, sincronizada automaticamente.</td></tr>
+      <tr><td><strong>Link rastreável</strong></td><td>Link com UTMs que registra o clique e atribui a origem ao lead.</td></tr>
+      <tr><td><strong>UTM</strong></td><td>Parâmetros de campanha (source, medium, campaign, content, term).</td></tr>
+      <tr><td><strong>Token invisível</strong></td><td>Marca em caracteres invisíveis embutida na mensagem para rastrear a origem.</td></tr>
+      <tr><td><strong>Webhook</strong></td><td>Mecanismo que envia/recebe dados automaticamente quando um evento ocorre.</td></tr>
+      <tr><td><strong>Asaas</strong></td><td>Gateway de pagamentos usado no faturamento SaaS da plataforma.</td></tr>
+      <tr><td><strong>WebSocket</strong></td><td>Tecnologia que atualiza a interface em tempo real, sem recarregar a página.</td></tr>
+      <tr><td><strong>Manager</strong></td><td>Gestor externo associado a várias empresas com um único login.</td></tr>
+    </tbody>
+  </table>
+  <div class="foot-nav">
+    <button class="foot-btn" onclick="showPage('m16')">← Módulo 16</button>
+    <button class="foot-btn primary" onclick="showPage('suporte')">Suporte →</button>
+  </div>
+</section>
+
+<!-- ══ SUPORTE ══ -->
+<section class="page" id="page-suporte">
+  <div class="breadcrumb"><a onclick="showPage('home')">Início</a><span>/</span>Suporte</div>
+  <div class="page-header">
+    <div class="ph-tag">Ajuda</div>
+    <h2>Suporte e Contatos</h2>
+    <p>Canais de atendimento, links úteis e solução dos problemas mais comuns da plataforma.</p>
+  </div>
+  <div class="row g-3 row-cols-2 row-cols-md-3 row-cols-xl-4 mb-4">
+    <div class="col"><div class="mod-card" style="cursor:default"><div class="mc-icon"><span class="material-symbols-outlined">mail</span></div><h3>E-mail do analista</h3><p><a class="mod-link" href="mailto:macaury@clicperformance.com.br">macaury@clicperformance.com.br</a></p></div></div>
+    <div class="col"><div class="mod-card" style="cursor:default"><div class="mc-icon"><span class="material-symbols-outlined">language</span></div><h3>Site</h3><p><a class="mod-link" href="https://acessaicrm.com.br/" target="_blank" rel="noopener">acessaicrm.com.br</a></p></div></div>
+  </div>
+  <div class="sub-section">
+    <div class="sub-title">Problemas frequentes e soluções</div>
+    <table class="wiki-table">
+      <thead><tr><th>Problema</th><th>Solução</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Não consigo fazer login</strong></td><td>Verifique e-mail e senha e a caixa de spam (inclusive o convite). Se necessário, use "Esqueci a senha" ou solicite a redefinição ao analista de suporte.</td></tr>
+        <tr><td><strong>WhatsApp desconectou (Evolution)</strong></td><td>Integrações → WhatsApp → Gerenciar → Reconectar → escaneie o QR Code novamente.</td></tr>
+        <tr><td><strong>Mensagem não enviou (WABA)</strong></td><td>Verifique se a janela de 24h não expirou. Use um template aprovado pela Meta fora do prazo.</td></tr>
+        <tr><td><strong>Lead sumiu do Kanban</strong></td><td>Verifique os filtros ativos e se você tem acesso ao funil/coluna. Limpe os filtros.</td></tr>
+        <tr><td><strong>Automação não disparou</strong></td><td>Confirme se está ativa, se o gatilho e as condições foram atendidos e veja o histórico de execuções.</td></tr>
+        <tr><td><strong>Bot não responde</strong></td><td>Verifique se o <strong>Assistente Virtual</strong> está ativo e se a conversa está em <strong>modo Bot</strong> (não Humano). Lembre-se de que o atendente pode assumir a conversa a qualquer momento.</td></tr>
+        <tr><td><strong>Lembrete/agendamento com falha</strong></td><td>Verifique se a instância WhatsApp está conectada e se o número do lead é válido.</td></tr>
+        <tr><td><strong>Resposta rápida não aparece</strong></td><td>Digite <code>/</code> antes do atalho e confirme se a resposta foi salva.</td></tr>
+        <tr><td><strong>Lead não foi atribuído</strong></td><td>Verifique a automação de atribuição e se há usuários disponíveis na lista do round-robin.</td></tr>
+        <tr><td><strong>Broadcast travado ou lento</strong></td><td>É esperado: há intervalo entre mensagens. Verifique o status por destinatário e a instância de envio.</td></tr>
+        <tr><td><strong>Origem do lead não foi atribuída</strong></td><td>Confirme se o link rastreável foi usado e se a primeira mensagem chegou dentro de 7 dias do clique.</td></tr>
+        <tr><td><strong>Não recebo notificações em tempo real</strong></td><td>Recarregue a página para reconectar e verifique a conexão com a internet.</td></tr>
+        <tr><td><strong>Empresa não foi ativada após pagamento</strong></td><td>A ativação ocorre na confirmação do Asaas. Aguarde alguns minutos ou verifique o status do pagamento.</td></tr>
+        <tr><td><strong>Recurso bloqueado / indisponível</strong></td><td>O recurso pode não estar incluído no seu plano. Verifique as Informações do Plano.</td></tr>
+      </tbody>
+    </table>
+    <div class="callout co-i"><span class="callout-icon material-symbols-outlined">support_agent</span><div>Não resolveu? Fale com o analista de suporte: <a class="mod-link" href="mailto:macaury@clicperformance.com.br">macaury@clicperformance.com.br</a>.</div></div>
+  </div>
+  <div class="foot-nav">
+    <button class="foot-btn" onclick="showPage('glossario')">← Glossário</button>
+    <button class="foot-btn primary" onclick="showPage('home')">← Voltar ao Início</button>
+  </div>
+</section>
+
+</div>
+</main>
+</div>
+
+<script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="js/app.js"></script>
+<script src="js/legibility-audit.js"></script>
+</body>
+</html>
